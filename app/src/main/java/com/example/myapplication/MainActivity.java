@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Map;
 import java.util.Set;
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText edit2;
     private String getAccount;
     private String getPwd;
+    private SharedPreferences helper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,16 +36,23 @@ public class MainActivity extends AppCompatActivity {
         edit2 = findViewById(R.id.editText2);
         tv1 = findViewById(R.id.textView4);
 
+        getAccount = edit.getText().toString().trim();
+        getPwd = edit2.getText().toString().trim();
+
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getAccount = edit.getText().toString().trim();
-                getPwd = edit2.getText().toString().trim();
 
-                saveData(getAccount,getPwd);
-                Intent intent = new Intent(MainActivity.this,LoginActivity.class);
-                startActivity(intent);
-                finish();
+                helper = getSharedPreferences("text", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = helper.edit();
+                editor.putString("name",getAccount);
+                editor.putString("pwd",getPwd);
+                editor.apply();
+//                Intent intent = new Intent(MainActivity.this,LoginActivity.class);
+//                startActivity(intent);
+//                finish();
+                Toast.makeText(MainActivity.this,"write success", Toast.LENGTH_LONG).show();
+
             }
         });
 
@@ -58,20 +67,28 @@ public class MainActivity extends AppCompatActivity {
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,RegisterActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(MainActivity.this,RegisterActivity.class);
+//                startActivity(intent);
+//                finish();
+                helper = getSharedPreferences("text", Context.MODE_PRIVATE);
+                String name = helper.getString("name","");
+                String pwd = helper.getString("pwd","");
+                tv1.setText(getAccount);
+//                edit2.setText(getPwd);
+                Toast.makeText(MainActivity.this,"read success", Toast.LENGTH_LONG).show();
             }
         });
 
     }
 
-    private void saveData(String account,String password){
-        SharedPreferences helper = getSharedPreferences("text", Context.MODE_WORLD_WRITEABLE);
-        SharedPreferences.Editor editor = helper.edit();
-        editor.putString("name",account);
-        editor.putString("pwd",password);
-        editor.commit();
-    }
+//     private void saveData(String account,String password){//
+//        SharedPreferences helper = getSharedPreferences("text", Context.MODE_WORLD_WRITEABLE);
+//        SharedPreferences.Editor editor = helper.edit();
+//        editor.putString("name",account);
+//        editor.putString("pwd",password);
+//        editor.commit();
+//        super.onStop();
+//    }
 
 
     @Override
