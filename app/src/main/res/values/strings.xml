@@ -3,6 +3,7 @@
     <string name="btn_login">登录</string>
     <string name="btn_forget">忘记密码</string>
     <string name="btn_register">注册</string>
+    <string name="btn_clear">清理缓存</string>
     <string name="btn_resetting">重置密码</string>
     <string name="tv_account">帐号：</string>
     <string name="tv_pwd">密码：</string>
