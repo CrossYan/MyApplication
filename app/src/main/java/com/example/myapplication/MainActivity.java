@@ -71,15 +71,15 @@ public class MainActivity extends AppCompatActivity {
 
                 booaccount = isSpecialChar(getAccount);
                 boopwd = isSpecialChar(getPwd);
-                Log.d("msg","reslut:" + booaccount);
+                Log.d("msg", "reslut:" + booaccount);
 
                 if (getAccount.equals("") || getPwd.equals("")) {
 
                     Toast.makeText(MainActivity.this, "账号或密码不能为空", Toast.LENGTH_LONG).show();
 
-                }else if(booaccount || boopwd){
+                } else if (booaccount || boopwd) {
                     Toast.makeText(MainActivity.this, "账号包含非法字符", Toast.LENGTH_LONG).show();
-                }else{
+                } else {
 
                     saveData(getAccount, getPwd);
                     Intent intent = new Intent(MainActivity.this, LoginActivity.class);
@@ -94,8 +94,6 @@ public class MainActivity extends AppCompatActivity {
         btn_resetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(MainActivity.this,ResettingActivity.class);
-////                startActivityForResult(intent,1);
 
                 String studentNumber = helper.getString("name", null);
                 String passWord = helper.getString("pwd", null);
@@ -112,14 +110,10 @@ public class MainActivity extends AppCompatActivity {
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(MainActivity.this,RegisterActivity.class);
-//                startActivity(intent);
-//                finish();
                 helper = getSharedPreferences("text", Context.MODE_PRIVATE);
                 String name = helper.getString("name", "");
                 String pwd = helper.getString("pwd", "");
                 tv1.setText(getAccount);
-//                edit2.setText(getPwd);
                 Toast.makeText(MainActivity.this, "read success", Toast.LENGTH_LONG).show();
             }
         });
@@ -139,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void saveData(String account, String password) {//
-        SharedPreferences helper = getSharedPreferences("text", Context.MODE_WORLD_WRITEABLE);
+        SharedPreferences helper = getSharedPreferences("text", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = helper.edit();
         editor.putString("name", account);
         editor.putString("pwd", password);
@@ -164,12 +158,6 @@ public class MainActivity extends AppCompatActivity {
             tv1.setText(content);
         }
 
-    }
-
-    private static boolean checkAccountMark(String account){
-        String all = "^[a-zA-Z0-9\\u4e00-\\u9fa5]+$";
-        Pattern pattern = Pattern.compile(all);
-        return pattern.matches(all,account);
     }
 
     public static boolean isSpecialChar(String str) {
